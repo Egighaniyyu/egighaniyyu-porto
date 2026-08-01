@@ -2144,7 +2144,6 @@ footer {
   font-size: 17px;
   line-height: 1.6;
   color: var(--gray);
-  max-width: 640px;
   margin-bottom: 32px;
 }
 .cs-hero-actions {
@@ -2154,13 +2153,22 @@ footer {
 }
 
 .cs-help {
-  padding: 24px 0 48px;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+}
+.cs-help-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 40px 56px;
 }
 .cs-help-label {
-  font-size: 16px;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
   color: var(--dark);
-  margin-bottom: 18px;
+  letter-spacing: -0.01em;
+  margin-bottom: 32px;
 }
 .cs-tags-row {
   display: flex;
@@ -2183,21 +2191,20 @@ footer {
 
 .cs-cover {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 40px;
+  margin: 0;
+  padding: 0;
 }
 .cs-cover img {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: var(--radius);
-  box-shadow: 0 30px 80px rgba(15, 21, 53, 0.18);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .cs-data-row {
-  margin: 48px 0 0;
+  margin: 0;
   background: #0a0a0a;
   color: white;
   padding: 56px 40px;
@@ -2334,9 +2341,11 @@ footer {
   margin-bottom: 32px;
 }
 .cs-stat-card {
-  background: var(--bg);
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-sm);
   padding: 28px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 .cs-stat-value {
   font-family: var(--font-display);
@@ -2470,15 +2479,6 @@ footer {
   position: relative;
   overflow: hidden;
 }
-.cs-result-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--accent);
-}
 .cs-result-value {
   font-family: var(--font-display);
   font-size: clamp(32px, 3.4vw, 44px);
@@ -2570,6 +2570,183 @@ footer {
   }
   .cs-lede {
     font-size: 15px;
+  }
+}
+
+/* ============================================================
+   Case study additions — methodology, help split, timeline, result tags
+   ============================================================ */
+
+/* Methodology note under Research & Insight title */
+.cs-methodology {
+  margin-top: 20px;
+  padding: 20px 24px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.65;
+}
+.cs-methodology-label {
+  font-weight: 700;
+  color: var(--dark);
+  margin-right: 4px;
+}
+
+/* "How did I help them" — split into Led vs Collaborated */
+.cs-help-group {
+  margin-top: 28px;
+}
+.cs-help-group:first-of-type {
+  margin-top: 0;
+}
+.cs-help-group-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: var(--gray);
+  margin-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cs-help-group-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.5;
+}
+.cs-help-group[data-scope="led"] .cs-help-group-label {
+  color: var(--accent);
+}
+.cs-tag-pill-led {
+  background: rgba(79, 110, 247, 0.12);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Timeline — calendar-tile grid layout */
+.cs-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.cs-timeline-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.cs-timeline-item:hover {
+  border-color: rgba(79, 110, 247, 0.25);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+.cs-timeline-weeks {
+  display: block;
+  padding: 12px 20px;
+  background: var(--accent);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.cs-timeline-content {
+  padding: 22px 22px 26px;
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.cs-timeline-phase {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.cs-timeline-activities {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* Result metric tags — Live / Projected / Target / Market */
+.cs-result-tag {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+.cs-result-tag-live {
+  background: rgba(34, 197, 94, 0.14);
+  color: #15803d;
+}
+.cs-result-tag-projected {
+  background: rgba(79, 110, 247, 0.14);
+  color: var(--accent);
+}
+.cs-result-tag-target {
+  background: rgba(234, 179, 8, 0.18);
+  color: #a16207;
+}
+.cs-result-tag-market {
+  background: rgba(0, 0, 0, 0.07);
+  color: var(--gray);
+}
+
+@media (max-width: 968px) {
+  .cs-timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .cs-timeline {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .cs-help {
+    padding: 0;
+  }
+  .cs-help-inner {
+    padding: 16px 24px 48px;
+  }
+  .cs-help-label {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+  .cs-help-group {
+    margin-top: 24px;
+  }
+  .cs-timeline-content {
+    padding: 20px 20px 24px;
+  }
+  .cs-timeline-phase {
+    font-size: 17px;
+  }
+  .cs-methodology {
+    font-size: 14.5px;
+    padding: 16px 18px;
   }
 }
 

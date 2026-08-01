@@ -15,27 +15,63 @@ export const metadata: Metadata = {
 
 const PRODUCT_URL = "https://lulladream.ai/";
 
-const HELP_TAGS = [
-  "User Research",
-  "Product Strategy",
+const HELP_LED = [
   "User Interface Design",
   "User Experience Design",
   "AI Interaction Design",
   "Voice Cloning UX",
   "Design Systems",
   "Mobile App Design",
+];
+
+const HELP_COLLABORATED = [
+  "User Research",
+  "Product Strategy",
   "Subscription Optimization",
-  "B2C",
 ];
 
 const PROJECT_DATA = [
-  { label: "Role", value: "Senior Product Designer" },
+  { label: "Role", value: "Product Designer" },
   { label: "Duration", value: "5 months" },
-  {
-    label: "Team",
-    value: "1 PM, 1 BA, Full-stack Engineers, 1 AI Engineer",
-  },
+  { label: "Status", value: "Live" },
+  { label: "Team", value: "1 PM, 1 BA, Engineers, 1 AI Engineer" },
   { label: "Tools", value: "Figma, Figma Make, ChatGPT" },
+];
+
+const RESEARCH_METHODOLOGY =
+  "Combined market opportunity data from EdTech + audio storytelling reports (Statista, Grand View) with UX benchmarks from Yoto, Toniebox, and Calm Kids. Informed by parent-forum research on Reddit and App Store reviews — not primary user studies at this scoping stage.";
+
+const TIMELINE = [
+  {
+    phase: "Discovery & Research",
+    weeks: "Weeks 1–3",
+    activities:
+      "Market sizing (EdTech + audio storytelling), competitor UX benchmarks (Yoto, Toniebox), parent-forum insight synthesis.",
+  },
+  {
+    phase: "Wireframing & Flows",
+    weeks: "Weeks 4–7",
+    activities:
+      "Voice cloning flow (5 steps), story generation flow (5 steps), story library IA, subscription funnel.",
+  },
+  {
+    phase: "Design System & UI",
+    weeks: "Weeks 8–13",
+    activities:
+      "Warm bedtime visual system, illustration direction, high-fidelity screens for library, reader, and generator.",
+  },
+  {
+    phase: "AI Voice & Story UX",
+    weeks: "Weeks 14–17",
+    activities:
+      "Voice cloning consent + progress UI, story customization inputs, playback controls, safety states.",
+  },
+  {
+    phase: "Prototyping & Handoff",
+    weeks: "Weeks 18–20",
+    activities:
+      "Interactive prototypes for onboarding tests, tokens + component export, engineering handoff docs.",
+  },
 ];
 
 const RESEARCH_STATS = [
@@ -89,11 +125,13 @@ const SOLUTIONS = [
   },
 ];
 
-const RESULTS = [
-  { value: "$3.1B", label: "Market opportunity by 2028" },
-  { value: "4", label: "Core AI features unified in one app" },
-  { value: "18%", label: "Targeted user penetration by 2028" },
-  { value: "$8.50", label: "ARPU benchmark to grow into" },
+type ResultTag = "Live" | "Projected" | "Target" | "Market";
+
+const RESULTS: { value: string; label: string; tag: ResultTag }[] = [
+  { value: "$3.1B", label: "Market opportunity by 2028", tag: "Market" },
+  { value: "4", label: "Core AI features unified in one app", tag: "Live" },
+  { value: "18%", label: "Targeted user penetration by 2028", tag: "Target" },
+  { value: "$8.50", label: "ARPU benchmark to grow into", tag: "Market" },
 ];
 
 export default function LullaDreamsCaseStudy() {
@@ -141,20 +179,36 @@ export default function LullaDreamsCaseStudy() {
           </div>
         </section>
 
-        {/* HOW DID I HELP THEM */}
-        <section className="cs-help">
-          <h3 className="cs-help-label">How did I help them</h3>
-          <div className="cs-tags-row">
-            {HELP_TAGS.map((tag) => (
-              <span key={tag} className="cs-tag-pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </section>
       </div>
 
-      {/* COVER IMAGE — full width landscape */}
+      {/* HOW DID I HELP THEM — full width, split by scope */}
+      <section className="cs-help">
+        <div className="cs-help-inner">
+          <h3 className="cs-help-label">How did I help them</h3>
+          <div className="cs-help-group" data-scope="led">
+            <div className="cs-help-group-label">Led / Owned</div>
+            <div className="cs-tags-row">
+              {HELP_LED.map((tag) => (
+                <span key={tag} className="cs-tag-pill cs-tag-pill-led">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="cs-help-group" data-scope="collaborated">
+            <div className="cs-help-group-label">Collaborated on</div>
+            <div className="cs-tags-row">
+              {HELP_COLLABORATED.map((tag) => (
+                <span key={tag} className="cs-tag-pill">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* COVER IMAGE — full viewport width, edge-to-edge */}
       <div className="cs-cover">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/lulladreams-thumb.webp" alt="LullaDreams app cover" />
@@ -209,6 +263,11 @@ export default function LullaDreamsCaseStudy() {
               A fast-growing category with clear room for a personalization-led
               product.
             </h2>
+            <p className="cs-methodology">
+              <span className="cs-methodology-label">Methodology:</span>
+              {" "}
+              {RESEARCH_METHODOLOGY}
+            </p>
           </div>
           <div className="cs-stat-grid">
             {RESEARCH_STATS.map((s) => (
@@ -245,10 +304,31 @@ export default function LullaDreamsCaseStudy() {
           </div>
         </section>
 
+        {/* TIMELINE */}
+        <section className="cs-section">
+          <div className="cs-section-head">
+            <span className="cs-section-tag">04 · Timeline</span>
+            <h2 className="cs-section-title">
+              Five phases across a 5-month execution — discovery to handoff.
+            </h2>
+          </div>
+          <ol className="cs-timeline">
+            {TIMELINE.map((t) => (
+              <li key={t.phase} className="cs-timeline-item">
+                <div className="cs-timeline-weeks">{t.weeks}</div>
+                <div className="cs-timeline-content">
+                  <h3 className="cs-timeline-phase">{t.phase}</h3>
+                  <p className="cs-timeline-activities">{t.activities}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         {/* VISUAL DESIGN */}
         <section className="cs-section">
           <div className="cs-section-head">
-            <span className="cs-section-tag">04 · Visual Design</span>
+            <span className="cs-section-tag">05 · Visual Design</span>
             <h2 className="cs-section-title">
               A warm, dreamy visual system that scales across every screen
               before lights-out.
@@ -278,7 +358,7 @@ export default function LullaDreamsCaseStudy() {
         {/* RESULT & IMPACT */}
         <section className="cs-section">
           <div className="cs-section-head">
-            <span className="cs-section-tag">05 · Result &amp; Impact</span>
+            <span className="cs-section-tag">06 · Result &amp; Impact</span>
             <h2 className="cs-section-title">
               A unified product designed to capture a $3.1B bedtime opportunity.
             </h2>
@@ -288,6 +368,11 @@ export default function LullaDreamsCaseStudy() {
               <div key={r.label} className="cs-result-card">
                 <div className="cs-result-value">{r.value}</div>
                 <div className="cs-result-label">{r.label}</div>
+                <span
+                  className={`cs-result-tag cs-result-tag-${r.tag.toLowerCase()}`}
+                >
+                  {r.tag}
+                </span>
               </div>
             ))}
           </div>

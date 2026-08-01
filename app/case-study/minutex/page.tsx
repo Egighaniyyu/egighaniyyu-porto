@@ -15,28 +15,64 @@ export const metadata: Metadata = {
 
 const PRODUCT_URL = "https://minutex-lp.vercel.app/";
 
-const HELP_TAGS = [
-  "Product Strategy",
-  "User Research",
-  "Service Design & Stakeholder Alignment",
+const HELP_LED = [
   "Landing Page Design",
   "User Interface Design",
   "User Experience Design",
   "AI Interaction Design",
   "Design Systems",
-  "Conversion Optimization",
   "Multi-platform Design",
-  "B2B + B2C",
+];
+
+const HELP_COLLABORATED = [
+  "User Research",
+  "Product Strategy",
+  "Service Design & Stakeholder Alignment",
+  "Conversion Optimization",
 ];
 
 const PROJECT_DATA = [
-  { label: "Role", value: "Senior Product Designer" },
+  { label: "Role", value: "Product Designer" },
   { label: "Duration", value: "4 months" },
-  {
-    label: "Team",
-    value: "1 PM, 1 BA, Full-stack Engineers, 1 AI Engineer",
-  },
+  { label: "Status", value: "Pre-launch" },
+  { label: "Team", value: "1 PM, 1 BA, Engineers, 1 AI Engineer" },
   { label: "Tools", value: "Figma, Figma Make, ChatGPT" },
+];
+
+const RESEARCH_METHODOLOGY =
+  "Grounded in secondary research on Otter AI and Plaud (product reviews, Reddit + Product Hunt community feedback) plus market reports on the meeting productivity space. Stakeholder interviews with the PM and founder informed the SEA multilingual angle. No large-scale user interviews were run at this portfolio-scoped stage.";
+
+const TIMELINE = [
+  {
+    phase: "Discovery & Positioning",
+    weeks: "Weeks 1–2",
+    activities:
+      "Competitor teardown (Otter, Plaud, Fireflies), category gap mapping, SEA multilingual research, positioning statement.",
+  },
+  {
+    phase: "Landing Page & GTM",
+    weeks: "Weeks 3–6",
+    activities:
+      "Landing page IA, hero + product showcase, pricing model, pre-order flow, waitlist funnel.",
+  },
+  {
+    phase: "Product UX Design",
+    weeks: "Weeks 7–10",
+    activities:
+      "Web app dashboard, mobile app screens, device companion UX, cross-device sync patterns.",
+  },
+  {
+    phase: "AI Interaction & Handoff",
+    weeks: "Weeks 11–14",
+    activities:
+      "AI summary + action items UI, multilingual transcript patterns, engineering handoff, walkthrough video prep.",
+  },
+  {
+    phase: "Launch Prep",
+    weeks: "Weeks 15–16",
+    activities:
+      "Landing page QA, waitlist analytics wiring, pre-order checkout iteration.",
+  },
 ];
 
 const RESEARCH_STATS = [
@@ -90,11 +126,17 @@ const SOLUTIONS = [
   },
 ];
 
-const RESULTS = [
-  { value: "10K+", label: "Waitlist sign-up target at launch" },
-  { value: "3-in-1", label: "Form factors unified in one ecosystem" },
-  { value: "99.5%", label: "Targeted system uptime SLA" },
-  { value: "SEA", label: "Primary market positioning" },
+type ResultTag = "Live" | "Projected" | "Target" | "Market";
+
+const RESULTS: { value: string; label: string; tag: ResultTag }[] = [
+  { value: "10K+", label: "Waitlist sign-up target at launch", tag: "Target" },
+  {
+    value: "3-in-1",
+    label: "Form factors unified in one ecosystem",
+    tag: "Live",
+  },
+  { value: "99.5%", label: "Targeted system uptime SLA", tag: "Target" },
+  { value: "SEA", label: "Primary market positioning", tag: "Market" },
 ];
 
 export default function MinutexCaseStudy() {
@@ -142,20 +184,36 @@ export default function MinutexCaseStudy() {
           </div>
         </section>
 
-        {/* HOW DID I HELP THEM */}
-        <section className="cs-help">
-          <h3 className="cs-help-label">How did I help them</h3>
-          <div className="cs-tags-row">
-            {HELP_TAGS.map((tag) => (
-              <span key={tag} className="cs-tag-pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </section>
       </div>
 
-      {/* COVER IMAGE — full width landscape */}
+      {/* HOW DID I HELP THEM — full width, split by scope */}
+      <section className="cs-help">
+        <div className="cs-help-inner">
+          <h3 className="cs-help-label">How did I help them</h3>
+          <div className="cs-help-group" data-scope="led">
+            <div className="cs-help-group-label">Led / Owned</div>
+            <div className="cs-tags-row">
+              {HELP_LED.map((tag) => (
+                <span key={tag} className="cs-tag-pill cs-tag-pill-led">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="cs-help-group" data-scope="collaborated">
+            <div className="cs-help-group-label">Collaborated on</div>
+            <div className="cs-tags-row">
+              {HELP_COLLABORATED.map((tag) => (
+                <span key={tag} className="cs-tag-pill">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* COVER IMAGE — full viewport width, edge-to-edge */}
       <div className="cs-cover">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/minutex-thumb.webp" alt="MinuteX app cover" />
@@ -208,6 +266,11 @@ export default function MinutexCaseStudy() {
             <h2 className="cs-section-title">
               A fast-growing category with a clear underserved gap in SEA.
             </h2>
+            <p className="cs-methodology">
+              <span className="cs-methodology-label">Methodology:</span>
+              {" "}
+              {RESEARCH_METHODOLOGY}
+            </p>
           </div>
           <div className="cs-stat-grid">
             {RESEARCH_STATS.map((s) => (
@@ -244,10 +307,32 @@ export default function MinutexCaseStudy() {
           </div>
         </section>
 
+        {/* TIMELINE */}
+        <section className="cs-section">
+          <div className="cs-section-head">
+            <span className="cs-section-tag">04 · Timeline</span>
+            <h2 className="cs-section-title">
+              Five phases across a 4-month execution — positioning to
+              launch-ready.
+            </h2>
+          </div>
+          <ol className="cs-timeline">
+            {TIMELINE.map((t) => (
+              <li key={t.phase} className="cs-timeline-item">
+                <div className="cs-timeline-weeks">{t.weeks}</div>
+                <div className="cs-timeline-content">
+                  <h3 className="cs-timeline-phase">{t.phase}</h3>
+                  <p className="cs-timeline-activities">{t.activities}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         {/* VISUAL DESIGN */}
         <section className="cs-section">
           <div className="cs-section-head">
-            <span className="cs-section-tag">04 · Visual Design</span>
+            <span className="cs-section-tag">05 · Visual Design</span>
             <h2 className="cs-section-title">
               A confident, professional visual system that scales across
               Web, Mobile, and Device touchpoints.
@@ -292,7 +377,7 @@ export default function MinutexCaseStudy() {
         {/* RESULT & IMPACT */}
         <section className="cs-section">
           <div className="cs-section-head">
-            <span className="cs-section-tag">05 · Result &amp; Impact</span>
+            <span className="cs-section-tag">06 · Result &amp; Impact</span>
             <h2 className="cs-section-title">
               A launch-ready ecosystem positioned to win the SEA AI meeting
               category.
@@ -303,6 +388,11 @@ export default function MinutexCaseStudy() {
               <div key={r.label} className="cs-result-card">
                 <div className="cs-result-value">{r.value}</div>
                 <div className="cs-result-label">{r.label}</div>
+                <span
+                  className={`cs-result-tag cs-result-tag-${r.tag.toLowerCase()}`}
+                >
+                  {r.tag}
+                </span>
               </div>
             ))}
           </div>

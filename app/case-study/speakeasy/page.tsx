@@ -15,26 +15,69 @@ export const metadata: Metadata = {
 
 const PRODUCT_URL = "https://speakeasy.mobi/";
 
-const HELP_TAGS = [
-  "User Research",
-  "Service Design & Stakeholder Alignment",
+const HELP_LED = [
   "User Interface Design",
   "User Experience Design",
   "AI Interaction Design",
   "Design Systems",
-  "Conversion Optimization",
   "Mobile App Design",
-  "B2C",
+];
+
+const HELP_COLLABORATED = [
+  "User Research",
+  "Product Strategy",
+  "Service Design & Stakeholder Alignment",
+  "Conversion Optimization",
 ];
 
 const PROJECT_DATA = [
-  { label: "Role", value: "Senior Product Designer" },
+  { label: "Role", value: "Product Designer" },
   { label: "Duration", value: "6 months" },
-  {
-    label: "Team",
-    value: "1 PM, 1 BA, Full-stack Engineers, 1 AI Engineer",
-  },
+  { label: "Status", value: "Live" },
+  { label: "Team", value: "1 PM, 1 BA, Engineers, 1 AI Engineer" },
   { label: "Tools", value: "Figma, Figma Make, ChatGPT" },
+];
+
+const RESEARCH_METHODOLOGY =
+  "Grounded in secondary market research (industry reports on EdTech + language learning) and competitor UX audits of Duolingo, Babbel, Cake, and existing AI tutor apps. Complemented by stakeholder interviews with the PM. Insights are inference-based — no primary user interviews were conducted at this iteration.";
+
+const TIMELINE = [
+  {
+    phase: "Discovery & Strategy",
+    weeks: "Weeks 1–4",
+    activities:
+      "Market mapping, competitor audits (Duolingo, Babbel, Cake), motivation-gap synthesis, feature scoping.",
+  },
+  {
+    phase: "Wireframing & IA",
+    weeks: "Weeks 5–8",
+    activities:
+      "Low-fi flows for onboarding, home, lesson, AI tutor, and community. Screen inventory + navigation model.",
+  },
+  {
+    phase: "Design System & UI",
+    weeks: "Weeks 9–14",
+    activities:
+      "Fox-led visual system, tokens, component library. High-fidelity screens across all 6 learning modes.",
+  },
+  {
+    phase: "AI Interaction Design",
+    weeks: "Weeks 15–18",
+    activities:
+      "AI tutor conversation patterns (chat + video), prompt scaffolding, feedback UI, energy/streak loop.",
+  },
+  {
+    phase: "Prototyping & Handoff",
+    weeks: "Weeks 19–22",
+    activities:
+      "Interactive prototypes for unmoderated usability testing, tokens exported, engineering handoff docs.",
+  },
+  {
+    phase: "Iteration & Launch",
+    weeks: "Weeks 23–24",
+    activities:
+      "Post-QA polish, subscription flow refinement, App Store assets + marketing site collaboration.",
+  },
 ];
 
 const RESEARCH_STATS = [
@@ -88,11 +131,13 @@ const SOLUTIONS = [
   },
 ];
 
-const RESULTS = [
-  { value: "+24%", label: "Daily learner retention (projected)" },
-  { value: "5×", label: "Faster onboarding completion" },
-  { value: "6", label: "Learning modes unified in one product" },
-  { value: "$13B", label: "Market opportunity by 2028" },
+type ResultTag = "Live" | "Projected" | "Target" | "Market";
+
+const RESULTS: { value: string; label: string; tag: ResultTag }[] = [
+  { value: "+24%", label: "Daily learner retention", tag: "Projected" },
+  { value: "5×", label: "Faster onboarding completion", tag: "Projected" },
+  { value: "6", label: "Learning modes unified in one product", tag: "Live" },
+  { value: "$13B", label: "Market opportunity by 2028", tag: "Market" },
 ];
 
 export default function SpeakeasyCaseStudy() {
@@ -140,20 +185,36 @@ export default function SpeakeasyCaseStudy() {
           </div>
         </section>
 
-        {/* HOW DID I HELP THEM */}
-        <section className="cs-help">
-          <h3 className="cs-help-label">How did I help them</h3>
-          <div className="cs-tags-row">
-            {HELP_TAGS.map((tag) => (
-              <span key={tag} className="cs-tag-pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </section>
       </div>
 
-      {/* COVER IMAGE — full width landscape */}
+      {/* HOW DID I HELP THEM — full width, split by scope */}
+      <section className="cs-help">
+        <div className="cs-help-inner">
+          <h3 className="cs-help-label">How did I help them</h3>
+          <div className="cs-help-group" data-scope="led">
+            <div className="cs-help-group-label">Led / Owned</div>
+            <div className="cs-tags-row">
+              {HELP_LED.map((tag) => (
+                <span key={tag} className="cs-tag-pill cs-tag-pill-led">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="cs-help-group" data-scope="collaborated">
+            <div className="cs-help-group-label">Collaborated on</div>
+            <div className="cs-tags-row">
+              {HELP_COLLABORATED.map((tag) => (
+                <span key={tag} className="cs-tag-pill">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* COVER IMAGE — full viewport width, edge-to-edge */}
       <div className="cs-cover">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/speakeasy-thumb.webp" alt="Speakeasy app cover" />
@@ -206,6 +267,11 @@ export default function SpeakeasyCaseStudy() {
             <h2 className="cs-section-title">
               A growing global category with a very specific motivation gap.
             </h2>
+            <p className="cs-methodology">
+              <span className="cs-methodology-label">Methodology:</span>
+              {" "}
+              {RESEARCH_METHODOLOGY}
+            </p>
           </div>
           <div className="cs-stat-grid">
             {RESEARCH_STATS.map((s) => (
@@ -242,10 +308,31 @@ export default function SpeakeasyCaseStudy() {
           </div>
         </section>
 
+        {/* TIMELINE */}
+        <section className="cs-section">
+          <div className="cs-section-head">
+            <span className="cs-section-tag">04 · Timeline</span>
+            <h2 className="cs-section-title">
+              Six phases across a 6-month execution — discovery to launch.
+            </h2>
+          </div>
+          <ol className="cs-timeline">
+            {TIMELINE.map((t) => (
+              <li key={t.phase} className="cs-timeline-item">
+                <div className="cs-timeline-weeks">{t.weeks}</div>
+                <div className="cs-timeline-content">
+                  <h3 className="cs-timeline-phase">{t.phase}</h3>
+                  <p className="cs-timeline-activities">{t.activities}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
         {/* VISUAL DESIGN */}
         <section className="cs-section">
           <div className="cs-section-head">
-            <span className="cs-section-tag">04 · Visual Design</span>
+            <span className="cs-section-tag">05 · Visual Design</span>
             <h2 className="cs-section-title">
               A friendly fox-led visual system that scales across every screen.
             </h2>
@@ -274,7 +361,7 @@ export default function SpeakeasyCaseStudy() {
         {/* RESULT & IMPACT */}
         <section className="cs-section">
           <div className="cs-section-head">
-            <span className="cs-section-tag">05 · Result &amp; Impact</span>
+            <span className="cs-section-tag">06 · Result &amp; Impact</span>
             <h2 className="cs-section-title">
               A unified product designed to capture a $13B opportunity.
             </h2>
@@ -284,6 +371,11 @@ export default function SpeakeasyCaseStudy() {
               <div key={r.label} className="cs-result-card">
                 <div className="cs-result-value">{r.value}</div>
                 <div className="cs-result-label">{r.label}</div>
+                <span
+                  className={`cs-result-tag cs-result-tag-${r.tag.toLowerCase()}`}
+                >
+                  {r.tag}
+                </span>
               </div>
             ))}
           </div>
