@@ -33,9 +33,12 @@ const HELP_COLLABORATED = [
 
 const PROJECT_DATA = [
   { label: "Role", value: "Product Designer" },
-  { label: "Duration", value: "4 months" },
   { label: "Status", value: "Pre-launch" },
-  { label: "Team", value: "1 PM, 1 BA, Engineers, 1 AI Engineer" },
+  {
+    label: "Team",
+    value:
+      "Product Manager, Business Analyst, Fullstack Developer, AI Engineer",
+  },
   { label: "Tools", value: "Figma, Figma Make, ChatGPT" },
 ];
 
