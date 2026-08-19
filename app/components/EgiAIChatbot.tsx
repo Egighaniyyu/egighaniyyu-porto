@@ -122,8 +122,15 @@ const TLD_ALLOWLIST = new Set([
 ]);
 
 const LINK_REGEX =
-  /(https?:\/\/[^\s)]+)|([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})|((?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s)]*)?)/gi;
+  /(https?:\/\/[^\s)]+)|([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})|((?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s)]*)?)|(\*\*[^*\n]+\*\*|__[^_\n]+__)/gi;
 const TRAILING_PUNCT = /[.,!?;:)\]'"]+$/;
+const MARKDOWN_STRIP_REGEX = /\*\*([^*\n]+)\*\*|__([^_\n]+)__/g;
+
+// Strip **bold** and __bold__ markdown symbols → plain text (used during
+// typewriter animation so asterisks never flash on screen).
+function stripMarkdown(text: string): string {
+  return text.replace(MARKDOWN_STRIP_REGEX, (_m, a, b) => a ?? b ?? "");
+}
 const CV_URL =
   "https://docs.google.com/document/d/15mDZqVJ1gNEh_KjaWpdZXIhVH0B_JMts/edit?usp=sharing&ouid=100324465092423050866&rtpof=true&sd=true";
 const CV_PHRASE_REGEX = /Download\s+CV/gi;
@@ -182,11 +189,19 @@ function renderInline(text: string): React.ReactNode[] {
   };
 
   while ((m = LINK_REGEX.exec(text)) !== null) {
-    const [, url, email, bareDomain] = m;
+    const [, url, email, bareDomain, bold] = m;
     const start = m.index;
 
     if (start > lastIndex) {
       pushPlain(text.slice(lastIndex, start));
+    }
+
+    // Bold markdown never has trailing punctuation stripped (** IS the delimiter)
+    if (bold) {
+      const inner = bold.startsWith("**") ? bold.slice(2, -2) : bold.slice(2, -2);
+      out.push(<strong key={`b-${key++}`}>{inner}</strong>);
+      lastIndex = start + m[0].length;
+      continue;
     }
 
     let match = m[0];
@@ -343,12 +358,15 @@ export default function EgiAIChatbot() {
         const followUps = buildFollowUps(reply, projects);
 
         // Insert empty message with typing flag → animate word-by-word →
-        // finalize with projects + followUps attached
+        // finalize with projects + followUps attached. Animate a version with
+        // markdown symbols stripped so users never see raw ** on screen; the
+        // final render uses the original text with **bold** converted to <strong>.
+        const typedText = stripMarkdown(reply);
         setMessages((curr) => [
           ...curr,
           { role: "assistant", content: "", typing: true },
         ]);
-        await animateTypewriter(reply, (partial) => {
+        await animateTypewriter(typedText, (partial) => {
           setMessages((curr) => {
             const last = curr[curr.length - 1];
             if (!last || last.role !== "assistant") return curr;
