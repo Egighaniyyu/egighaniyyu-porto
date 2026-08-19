@@ -10,7 +10,41 @@ type Message = {
   content: string;
   projects?: ProjectKey[];
   followUps?: string[];
+  typing?: boolean;
 };
+
+// Typewriter pacing — feels intentional, not choppy
+const TYPE_DELAY_MS = 40; // per word
+const TYPE_PAUSE_AFTER_SENTENCE_MS = 220;
+
+function animateTypewriter(
+  text: string,
+  onUpdate: (partial: string) => void,
+): Promise<void> {
+  return new Promise((resolve) => {
+    const tokens = text.split(/(\s+)/); // keep whitespace tokens
+    let index = 0;
+    let current = "";
+    const tick = () => {
+      if (index >= tokens.length) {
+        resolve();
+        return;
+      }
+      current += tokens[index];
+      onUpdate(current);
+      const chunk = tokens[index];
+      const endsSentence = /[.!?][)"']?\s*$/.test(chunk);
+      index++;
+      const delay = chunk.trim()
+        ? endsSentence
+          ? TYPE_PAUSE_AFTER_SENTENCE_MS
+          : TYPE_DELAY_MS
+        : 0;
+      setTimeout(tick, delay);
+    };
+    tick();
+  });
+}
 
 const PROJECTS: Record<
   ProjectKey,
@@ -307,10 +341,37 @@ export default function EgiAIChatbot() {
             : "Sorry, something went wrong. Please try again in a moment.";
         const projects = detectProjects(reply);
         const followUps = buildFollowUps(reply, projects);
+
+        // Insert empty message with typing flag → animate word-by-word →
+        // finalize with projects + followUps attached
         setMessages((curr) => [
           ...curr,
-          { role: "assistant", content: reply, projects, followUps },
+          { role: "assistant", content: "", typing: true },
         ]);
+        await animateTypewriter(reply, (partial) => {
+          setMessages((curr) => {
+            const last = curr[curr.length - 1];
+            if (!last || last.role !== "assistant") return curr;
+            return [
+              ...curr.slice(0, -1),
+              { ...last, content: partial },
+            ];
+          });
+        });
+        setMessages((curr) => {
+          const last = curr[curr.length - 1];
+          if (!last || last.role !== "assistant") return curr;
+          return [
+            ...curr.slice(0, -1),
+            {
+              ...last,
+              content: reply,
+              projects,
+              followUps,
+              typing: false,
+            },
+          ];
+        });
       } catch {
         setMessages((curr) => [
           ...curr,
@@ -404,10 +465,13 @@ export default function EgiAIChatbot() {
                     m.role === "user" ? "egiai-msg-user" : "egiai-msg-bot"
                   }`}
                 >
-                  {renderInline(m.content)}
+                  {m.typing ? m.content : renderInline(m.content)}
+                  {m.typing && (
+                    <span className="egiai-typing-cursor" aria-hidden />
+                  )}
                 </div>
 
-                {m.role === "assistant" && m.projects && m.projects.length > 0 && (
+                {m.role === "assistant" && !m.typing && m.projects && m.projects.length > 0 && (
                   <div className="egiai-cards">
                     {m.projects.map((key) => {
                       const p = PROJECTS[key];
@@ -440,6 +504,7 @@ export default function EgiAIChatbot() {
 
                 {isLatestBot &&
                   !loading &&
+                  !m.typing &&
                   m.followUps &&
                   m.followUps.length > 0 && (
                     <div className="egiai-followups">
@@ -459,7 +524,7 @@ export default function EgiAIChatbot() {
             );
           })}
 
-          {loading && (
+          {loading && messages[messages.length - 1]?.role === "user" && (
             <div className="egiai-msg egiai-msg-bot egiai-typing" aria-live="polite">
               <span />
               <span />

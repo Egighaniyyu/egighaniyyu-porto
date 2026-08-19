@@ -3339,7 +3339,24 @@ footer {
   text-decoration-color: #dbeafe;
 }
 
-/* Typing indicator */
+/* Inline blinking cursor while assistant is typing */
+.egiai-typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  opacity: 0.85;
+  animation: egiaiCursorBlink 1s steps(2, end) infinite;
+}
+@keyframes egiaiCursorBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Typing indicator (3 dots — used only during API wait) */
 .egiai-typing {
   display: inline-flex;
   align-items: center;
