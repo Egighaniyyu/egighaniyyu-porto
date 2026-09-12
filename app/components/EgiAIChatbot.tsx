@@ -53,7 +53,7 @@ const PROJECTS: Record<
   speakeasy: {
     name: "Speakeasy",
     category: "Mobile App · Language Learning",
-    tagline: "AI-powered language app · +24% retention",
+    tagline: "AI language app · 3 telco partners",
     thumb: "/images/speakeasy-thumb.webp",
     href: "/case-study/speakeasy",
   },
@@ -67,7 +67,7 @@ const PROJECTS: Record<
   lulladreams: {
     name: "LullaDreams",
     category: "Mobile App · Storytelling",
-    tagline: "AI bedtime storytelling for $3.1B market",
+    tagline: "AI bedtime stories · MEFFYS 2026 runner-up",
     thumb: "/images/lulladreams-thumb.webp",
     href: "/case-study/lulladreams",
   },

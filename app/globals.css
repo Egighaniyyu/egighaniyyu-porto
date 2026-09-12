@@ -2750,6 +2750,82 @@ footer {
   }
 }
 
+/* Award / recognition card */
+.cs-award {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 32px 36px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+.cs-award-mark {
+  flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  background: linear-gradient(135deg, #fff4d6 0%, #ffe3a3 100%);
+}
+.cs-award-badge {
+  display: inline-flex;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dark);
+}
+.cs-award-title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--dark);
+}
+.cs-award-text {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--gray);
+  max-width: 760px;
+}
+
+/* Small label above a stat grid (e.g. "Usability testing · Maze") */
+.cs-stat-group-label {
+  margin: 32px 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+}
+
+@media (max-width: 768px) {
+  .cs-award {
+    flex-direction: column;
+    text-align: center;
+    padding: 28px 22px;
+    gap: 18px;
+  }
+  .cs-award-mark {
+    width: 72px;
+    height: 72px;
+    font-size: 36px;
+  }
+  .cs-award-title {
+    font-size: 20px;
+  }
+}
+
 /* ============================================================
    More case studies (related projects) section
    ============================================================ */

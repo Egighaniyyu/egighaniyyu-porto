@@ -13,15 +13,15 @@ export type Project = {
 export const PROJECTS: Project[] = [
   {
     slug: "speakeasy",
-    name: "Speakeasy | AI-Powered Language Learning",
-    category: "Mobile App · Product Design · UX Strategy",
+    name: "Speakeasy | AI Language Learning Platform",
+    category: "Mobile App · Product & UX",
     title:
-      "Designing an AI-powered language app projected to drive +24% daily learner retention",
-    desc: "Speakeasy blends structured lessons, real-life media, an AI tutor, and a moderated community into one cohesive product — designed end-to-end from onboarding through subscription and telco distribution.",
+      "Speakeasy — a language app built to make speaking feel safe, with Renald the AI companion",
+    desc: "A language-learning platform shipped from PT. LinkIT360 in Jakarta — structured courses, film and song-based lessons, a peer community, and unrushed conversation with Renald. Live across three international telco partners with ±6 supported languages.",
     metrics: [
-      { value: "+24%", label: "Daily learner retention (projected)" },
-      { value: "6", label: "Learning modes unified" },
-      { value: "$13B", label: "Market opportunity by 2028" },
+      { value: "±6", label: "Supported languages" },
+      { value: "3", label: "International telco integrations" },
+      { value: "Phase 2", label: "Full feature set live" },
     ],
     thumb: "/images/speakeasy-thumb.webp",
     caseStudyHref: "/case-study/speakeasy",
@@ -46,14 +46,14 @@ export const PROJECTS: Project[] = [
   {
     slug: "lulladreams",
     name: "LullaDreams | AI Bedtime Storytelling",
-    category: "Mobile App · Product Design · AI Voice UX",
+    category: "Web & Mobile · Product & Research · AI Voice UX",
     title:
-      "Designing an AI-powered bedtime storytelling app positioned for a $3.1B market by 2028",
-    desc: "LullaDreams pairs a curated fairy-tale library with voice cloning and AI story generation — so every child gets a personalized bedtime in their parent's actual voice, even when mom or dad can't be in the room.",
+      "LullaDreams — bedtime stories in a parent's own voice, runner-up at the MEFFYS 2026 Awards",
+    desc: "An AI bedtime story platform from PT. LinkIT360 — story library, AI story generator, and voice cloning so parents can narrate even when they can't be there. Shaped by usability testing with 12 parents and a pricing study before launch.",
     metrics: [
-      { value: "$3.1B", label: "Market opportunity by 2028" },
-      { value: "4", label: "Core AI features unified" },
-      { value: "18%", label: "Targeted user penetration by 2028" },
+      { value: "2nd", label: "MEFFYS 2026 · Content & Advertising" },
+      { value: "100%", label: "Task success across core flows" },
+      { value: "Rp39–49K", label: "Validated monthly launch price" },
     ],
     thumb: "/images/lulladreams-thumb.webp",
     caseStudyHref: "/case-study/lulladreams",
