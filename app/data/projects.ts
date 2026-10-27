@@ -41,7 +41,7 @@ export const PROJECTS: Project[] = [
     ],
     thumb: "/images/minutex-thumb.webp",
     caseStudyHref: "/case-study/minutex",
-    productHref: "https://minutex-lp.vercel.app/",
+    productHref: "https://minutex.ai/",
   },
   {
     slug: "lulladreams",

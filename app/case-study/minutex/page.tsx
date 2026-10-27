@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "How MinuteX was designed as a 3-in-1 AI meeting assistant ecosystem — combining Web, Mobile, and Hardware Device into one workspace, targeting 10K+ waitlist sign-ups at launch.",
 };
 
-const PRODUCT_URL = "https://minutex-lp.vercel.app/";
+const PRODUCT_URL = "https://minutex.ai/";
 
 const HELP_LED = [
   "Landing Page Design",
